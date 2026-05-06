@@ -6,11 +6,12 @@ from src.domain.models.CampaignDataOutputModel import CampaignDataOutput
 class CampaignReiterateService:
     """Application Service that orchestrates campaign reiteration."""
     def __init__(self,ai_service: AiServicePort):
+        """Initialize with injected AI service dependency."""
         self.ai_service = ai_service
         
         
     def reiterate_campaign(self,critique:CampaignDataOutput,campaign_data:CampaignDataInput) -> CampaignDataInput:
-        pass
+        """Full campaign reiteration flow: generate new campaign based on critique and original data."""
         system_prompt = """You are a world-class marketing and video production expert with brilliant writing skills.
         Your task is make changes to the original campaign based on the provided critique and generate a new improved campaign.
         Please ensure the revised campaign maintains the original goals and messaging while addressing the identified weaknesses.
