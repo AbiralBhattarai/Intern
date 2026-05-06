@@ -1,20 +1,19 @@
-from pydantic import BaseModel, Field, field_validator
-from typing import Literal, Union, Annotated
+from typing import Annotated, Union
 from datetime import datetime
+from pydantic import BaseModel, Field, field_validator
+from src.domain.models.enums import CampaignGoal, PromotingItem, VideoOrientation, VideoType
 
 
 class CampaignDataInput(BaseModel):
-    """Input model for campaign data used for analysis and reiteration."""
-    
-    campaign_goals: Annotated[Literal['brand awareness', 'building engagement', 'authentic content'], Field(description="Goal of the campaign")] = None
-    promoting_item: Annotated[Literal['physical product', 'online service', 'in-store experience'], Field(description="Type of item being promoted")] = 'physical product'
-    campaign_niche: Annotated[str, Field(description="Niche of the campaign")] = 'other'
-    campaign_end_date: Annotated[datetime, Field(description="End date of the campaign")] = None
-    campaign_description: Annotated[str, Field(description="Description of the campaign")] = ''
-    video_orientation: Annotated[Literal['portrait', 'landscape', 'square'], Field(description="Orientation of the video")] = 'portrait'
-    video_type: Annotated[Literal['before/after', 'information', 'lifestyle', 'reviews', 'product demo', 'recipes', 'testimonials', 'tutorials', 'unboxing'], Field(description="Type of video content")] = 'information'
+    campaign_goals: Annotated[CampaignGoal | None, Field(description="Goal of the campaign")] = None
+    promoting_item: Annotated[PromotingItem, Field(description="Type of item being promoted")] = PromotingItem.PHYSICAL_PRODUCT
+    campaign_niche: Annotated[str, Field(description="Niche of the campaign")] = "other"
+    campaign_end_date: Annotated[datetime | None, Field(description="End date of the campaign")] = None
+    campaign_description: Annotated[str, Field(description="Description of the campaign")] = ""
+    video_orientation: Annotated[VideoOrientation, Field(description="Orientation of the video")] = VideoOrientation.PORTRAIT
+    video_type: Annotated[VideoType, Field(description="Type of video content")] = VideoType.INFORMATION
     video_duration_seconds: Annotated[Union[int, str], Field(description="Duration of the video in seconds")] = 0
-    video_script: Annotated[str, Field(description="Script of the video")] = ''
+    video_script: Annotated[str, Field(description="Script of the video")] = ""
     
     @field_validator('promoting_item', mode='before')
     def normalize_promoting_item(cls, v):
