@@ -1,0 +1,2 @@
+MODEL = "gemini-2.5-flash"
+temperature = 0.7
