@@ -144,7 +144,7 @@ def main():
             print("\n  REVISED CAMPAIGN DETAILS:")
             print(revised_campaign)
         except Exception as e:
-            print(f"  Error during campaign reiteration: {e}")    
+            print(f"  Error during campaign reiteration: {e}")
     except Exception as e:
         print(f"Error: {e}")
         raise
