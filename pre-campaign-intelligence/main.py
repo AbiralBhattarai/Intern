@@ -1,24 +1,3 @@
-# from fastapi import FastAPI
-# from src.domain.models.CampaignDataInputModel import CampaignDataInput
-# from src.domain.models.CampaignDataOutputModel import CampaignDataOutput
-# from src.application.services.OrchestrationService import main
-
-# app = FastAPI(
-#     title="Pre-Campaign Intelligence",
-#     description="AI-powered campaign analysis and optimization service",
-#     version="1.0.0"
-# )
-
-
-# @app.post("/analyze-campaign", response_model=CampaignDataInput)
-# def analyze_campaign(campaign_input: CampaignDataInput) -> CampaignDataInput:
-#     """
-#     Analyze a campaign and get AI-powered critique and improvements.
-#     """
-#     main()
-    
-    
-    
 import os
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
@@ -30,7 +9,6 @@ from src.application.services.CampaignAnalysisService import CampaignAnalysisSer
 from src.config.hook_words_config import HOOK_WORDS
 from src.config.ai_model_config import MODEL
 from src.config.cta_words_config import CTA_WORDS
-from src.application.services.CampaignReiterateService import CampaignReiterateService
 from dotenv import load_dotenv
 # import random
 load_dotenv()
@@ -42,7 +20,7 @@ def setup_dependencies():
     Initializes all adapters and services with their dependencies.
     """
     # Load configuration
-    api_key = os.getenv("GOOGLE_GENERATIVE_AI_API_KEY")
+    api_key = os.getenv("GOOGEL_GENERATIVE_AI_API_KEY")
     
     # Initialize adapters
     sentiment_analyzer = SentimentIntensityAnalyzer()
@@ -64,11 +42,7 @@ def setup_dependencies():
         ai_service=ai_service
     )
     
-    campaign_reiterate_service = CampaignReiterateService(
-        ai_service=ai_service
-    )
-    
-    return campaign_analysis_service,campaign_reiterate_service
+    return campaign_analysis_service
 
 
 def main():
@@ -87,7 +61,7 @@ def main():
         
         # Step 2: Setup services
         print("\n2. Initializing services and adapters...")
-        campaign_analysis_service, campaign_reiterate_service = setup_dependencies()
+        service = setup_dependencies()
         
         # Step 3: Process each campaign
         print("\n3. Analyzing campaigns...\n")
@@ -113,7 +87,7 @@ def main():
                 print(f"  Duration: {campaign_input.video_duration_seconds}s")
                 
                 # Analyze campaign (returns validated CampaignDataOutput)
-                result = campaign_analysis_service.review_campaign(campaign_input)
+                result = service.review_campaign(campaign_input)
                 
                 # Display results
                 print("\n  ANALYSIS RESULTS:")
@@ -135,16 +109,6 @@ def main():
         print("=" * 60)
         print("Analysis complete!")
         
-        print("="*60)
-        print('Starting to reiterate campaign based on critique...')
-        
-        try:
-            # Reiterate campaign based on critique
-            revised_campaign = campaign_reiterate_service.reiterate_campaign(critique=result, campaign_data=campaign_input)
-            print("\n  REVISED CAMPAIGN DETAILS:")
-            print(revised_campaign)
-        except Exception as e:
-            print(f"  Error during campaign reiteration: {e}")
     except Exception as e:
         print(f"Error: {e}")
         raise

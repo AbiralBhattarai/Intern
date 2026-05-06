@@ -31,7 +31,7 @@ class GeminiAiServiceAdapter(AiServicePort):
         Returns:
             Generated response text
         """
-        full_prompt = f"system_prompt:{system_prompt}\n\nUser prompt:{user_prompt}"
+        full_prompt = f"{system_prompt}\n\n{user_prompt}"
 
         response = self.client.models.generate_content(
             model=self.model,

@@ -1,2 +1,2 @@
-MODEL = "gemini-3.1-flash-lite-preview"
+MODEL = "gemini-2.5-flash"
 temperature = 0.7

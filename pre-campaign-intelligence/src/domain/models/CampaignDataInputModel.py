@@ -4,8 +4,6 @@ from datetime import datetime
 
 
 class CampaignDataInput(BaseModel):
-    """Input model for campaign data used for analysis and reiteration."""
-    
     campaign_goals: Annotated[Literal['brand awareness', 'building engagement', 'authentic content'], Field(description="Goal of the campaign")] = None
     promoting_item: Annotated[Literal['physical product', 'online service', 'in-store experience'], Field(description="Type of item being promoted")] = 'physical product'
     campaign_niche: Annotated[str, Field(description="Niche of the campaign")] = 'other'
