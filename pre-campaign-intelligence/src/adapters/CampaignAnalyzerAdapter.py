@@ -1,9 +1,9 @@
 from src.ports.input.CampaignAnalyzerPort import CampaignAnalyzerPort
-
+from src.domain.services.SentimentAnalyzer import SentimentAnalyzer
 
 class RuleBasedCampaignAnalyzer(CampaignAnalyzerPort):
     """Simple rule-based campaign analyzer implementation. Analyzes video scripts for sentiment, hooks, CTAs, and pacing."""
-    def __init__(self,sentiment_analyzer,hook_words,cta_words):
+    def __init__(self,sentiment_analyzer:SentimentAnalyzer,hook_words: list,cta_words: list):
         """Initialize with dependencies."""
         self.sentiment_analyzer = sentiment_analyzer
         self.hook_words = hook_words
