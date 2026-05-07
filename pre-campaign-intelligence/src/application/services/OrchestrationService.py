@@ -67,5 +67,5 @@ def AnalyzeAndReiterateCampaign(campaign_input: CampaignDataInput) -> CampaignDa
         campaign_data=campaign_input,
     )
 
-    return revised_campaign
+    return CampaignDataInput.model_validate(revised_campaign)
 
