@@ -1,5 +1,5 @@
 from src.ports.input.CampaignAnalyzerPort import CampaignAnalyzerPort
-from src.domain.services.SentimentAnalyzer import SentimentAnalyzer
+from src.domain.contract.SentimentAnalyzer import SentimentAnalyzer
 
 class RuleBasedCampaignAnalyzer(CampaignAnalyzerPort):
     """Simple rule-based campaign analyzer implementation. Analyzes video scripts for sentiment, hooks, CTAs, and pacing."""
