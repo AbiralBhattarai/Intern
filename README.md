@@ -30,3 +30,50 @@ FastAPI backend that reviews a campaign *before launch* and returns an improved 
 ### Using uv (recommended)
 ```bash
 uv sync
+```
+
+
+
+# Pre-Campaign Intelligence
+
+Pre-Campaign Intelligence is a FastAPI service that reviews a marketing campaign *before launch* and returns an improved version of the same campaign payload (currently focused on rewriting the `video_script`). It combines rule-based analysis (sentiment, hooks, CTAs, pacing) with a Google Gemini critique + rewrite loop.
+
+## Folder Structure
+
+```text
+pre-campaign-intelligence/
+  .env
+  .python-version
+  main.py
+  pyproject.toml
+  README.md
+  dummy_data/
+    .gitignore
+    campaign_dummy_data.json
+  src/
+    adapters/
+      AiServiceAdapter.py
+      CampaignAnalyzerAdapter.py
+    application/
+      services/
+        CampaignAnalysisService.py
+        CampaignReiterateService.py
+        OrchestrationService.py
+    config/
+      ai_model_config.py
+      cta_words_config.py
+      hook_words_config.py
+    domain/
+      contract/
+        SentimentAnalyzer.py
+      models/
+        CampaignDataInputModel.py
+        CampaignDataOutputModel.py
+        enums.py
+    ports/
+      input/
+        CampaignAnalyzerPort.py
+      output/
+        AiServicePort.py
+    utils/
+      get_dummy_campaign_data.py
