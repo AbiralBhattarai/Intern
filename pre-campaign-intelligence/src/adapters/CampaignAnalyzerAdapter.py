@@ -1,5 +1,5 @@
 from src.ports.input.CampaignAnalyzerPort import CampaignAnalyzerPort
-from src.domain.services.SentimentAnalyzer import SentimentAnalyzer
+from src.domain.contract.SentimentAnalyzer import SentimentAnalyzer
 
 class RuleBasedCampaignAnalyzer(CampaignAnalyzerPort):
     """Simple rule-based campaign analyzer implementation. Analyzes video scripts for sentiment, hooks, CTAs, and pacing."""
@@ -38,7 +38,7 @@ class RuleBasedCampaignAnalyzer(CampaignAnalyzerPort):
         words = len(script.split())
         if words == 0:
             return 0
-        return words/duration
+        return words / (duration+1) #+1 to handle division by zero
 
 
     def analyze(self,campaign_data: dict) -> dict:

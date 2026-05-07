@@ -25,7 +25,8 @@ class CampaignReiterateService:
         fixes: {critique.fixes}
         
         Please provide the revised campaign details in JSON format with the same structure as the original campaign data.
-        Donot Makes changes to the campaign goals, campaign_description, promoting item, nichce ,campaign end date,video type, video duration and video orientation. Only make changes to the video script based on the critique.
+        Donot Makes changes to the campaign goals, campaign_description, promoting item, nichce ,campaign end date,video type, video duration and video orientation. 
+        Only make changes to the video script based on the critique.
         """
         
         result = self.ai_service.generate(

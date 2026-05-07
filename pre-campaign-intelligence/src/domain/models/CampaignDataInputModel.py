@@ -16,28 +16,22 @@ class CampaignDataInput(BaseModel):
     video_script: Annotated[str, Field(description="Script of the video")] = ""
     
     @field_validator('promoting_item', mode='before')
-    def normalize_promoting_item(cls, v):
+    def normalize_promoting_item(cls, v:str):
         """Convert promoting_item to lowercase for case-insensitive matching."""
-        if isinstance(v, str):
-            return v.lower()
-        return v
+        return v.lower()
     
     @field_validator('video_orientation', mode='before')
-    def normalize_video_orientation(cls, v):
+    def normalize_video_orientation(cls, v:str):
         """Convert video_orientation to lowercase for case-insensitive matching."""
-        if isinstance(v, str):
-            return v.lower()
-        return v
+        return v.lower()
     
     @field_validator('video_type', mode='before')
-    def normalize_video_type(cls, v):
+    def normalize_video_type(cls, v:str):
         """Convert video_type to lowercase for case-insensitive matching."""
-        if isinstance(v, str):
-            return v.lower()
-        return v
+        return v.lower()
     
     @field_validator('video_duration_seconds', mode='before')
-    def validate_video_duration(cls, v):
+    def validate_video_duration(cls, v: Union[int, str]):
         """
         Parse video duration in various formats: 
         - "30" -> 30
@@ -45,8 +39,11 @@ class CampaignDataInput(BaseModel):
         - ">5m" -> 300 (approx)
         - "15s" -> 15
         """
-        if isinstance(v, int):
-            return v
+        if v is None:
+            return 0
+        
+        if isinstance(v, (int,float)):
+            return int(v)
         
         if isinstance(v, str):
             v = v.strip()
