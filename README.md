@@ -32,12 +32,6 @@ FastAPI backend that reviews a campaign *before launch* and returns an improved 
 uv sync
 ```
 
-
-
-# Pre-Campaign Intelligence
-
-Pre-Campaign Intelligence is a FastAPI service that reviews a marketing campaign *before launch* and returns an improved version of the same campaign payload (currently focused on rewriting the `video_script`). It combines rule-based analysis (sentiment, hooks, CTAs, pacing) with a Google Gemini critique + rewrite loop.
-
 ## Folder Structure
 
 ```text
