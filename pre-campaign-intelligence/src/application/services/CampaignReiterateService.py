@@ -1,6 +1,10 @@
 from src.ports.output.AiServicePort import AiServicePort
 from src.domain.models.CampaignDataInputModel import CampaignDataInput
 from src.domain.models.CampaignDataOutputModel import CampaignDataOutput
+from src.application.prompts import (
+    CAMPAIGN_REITERATION_SYSTEM_PROMPT,
+    get_campaign_reiteration_user_prompt
+)
 import json
 
 class CampaignReiterateService:
@@ -13,21 +17,8 @@ class CampaignReiterateService:
     def reiterate_campaign(self,critique:CampaignDataOutput,campaign_data:CampaignDataInput) -> CampaignDataInput:
         """Full campaign reiteration flow: generate new campaign based on critique and original data."""
         
-        
-        system_prompt = """You are a world-class marketing and video production expert with brilliant writing skills.
-        Your task is make changes to the original campaign based on the provided critique and generate a new improved campaign.
-        Please ensure the revised campaign maintains the original goals and messaging while addressing the identified weaknesses.
-        """
-        user_prompt =  f"""Previous Details:
-        
-        campaign_data: {campaign_data}
-        
-        fixes: {critique.fixes}
-        
-        Please provide the revised campaign details in JSON format with the same structure as the original campaign data.
-        Donot Makes changes to the campaign goals, campaign_description, promoting item, nichce ,campaign end date,video type, video duration and video orientation. 
-        Only make changes to the video script based on the critique.
-        """
+        system_prompt = CAMPAIGN_REITERATION_SYSTEM_PROMPT
+        user_prompt = get_campaign_reiteration_user_prompt(campaign_data, critique)
         
         result = self.ai_service.generate(
             system_prompt=system_prompt,

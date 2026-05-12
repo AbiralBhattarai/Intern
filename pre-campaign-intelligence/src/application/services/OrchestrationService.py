@@ -127,6 +127,7 @@ def main():
     except Exception as e:
         print(f"Error: {e}")
         raise
+    return CampaignDataInput.model_validate(revised_campaign)
 
 
 if __name__ == "__main__":

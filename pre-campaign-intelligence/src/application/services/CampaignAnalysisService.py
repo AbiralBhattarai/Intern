@@ -2,6 +2,10 @@ from src.ports.input.CampaignAnalyzerPort import CampaignAnalyzerPort
 from src.ports.output.AiServicePort import AiServicePort
 from src.domain.models.CampaignDataInputModel import CampaignDataInput
 from src.domain.models.CampaignDataOutputModel import CampaignDataOutput
+from src.application.prompts import (
+    CAMPAIGN_ANALYSIS_SYSTEM_PROMPT,
+    get_campaign_analysis_user_prompt
+)
 import json
 
 
@@ -45,34 +49,8 @@ class CampaignAnalysisService:
         analysis_results = self.analyzer.analyze(campaign_dict)
         
         # Step 2: Generate AI critique based on analysis
-        system_prompt = """You are a world-class marketing and video production expert.
-        Based on the campaign analysis, provide:
-        1. Pros: List strengths of the current script
-        2. Cons: List weaknesses/areas for improvement
-        3. Fixes: Specific, actionable improvements for each weakness
-        
-        Format your response as JSON with keys: pros, cons, fixes (each as a list of strings)"""
-        
-        user_prompt = f"""
-        Campaign Data:
-        - Campaign Goals: {campaign_input.campaign_goals}
-        - Promoting Item: {campaign_input.promoting_item}
-        - Niche: {campaign_input.campaign_niche}
-        - Campaign End Date: {campaign_input.campaign_end_date}
-        - Campaign Description: {campaign_input.campaign_description}
-        - Video Type: {campaign_input.video_type}
-        - Duration: {campaign_input.video_duration_seconds}s
-        - Video Orientation: {campaign_input.video_orientation}
-        
-        Analysis Results:
-        {analysis_results}
-        
-        Original Script:
-        {campaign_input.video_script}
-        
-        Please provide detailed pros, cons, and fixes based on this data.
-        Also suggest if any of the input parameters could be optimized for better results.
-        """
+        system_prompt = CAMPAIGN_ANALYSIS_SYSTEM_PROMPT
+        user_prompt = get_campaign_analysis_user_prompt(campaign_input, analysis_results)
         
         critique = self.ai_service.generate(
             system_prompt=system_prompt,
