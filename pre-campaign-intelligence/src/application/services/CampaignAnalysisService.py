@@ -4,6 +4,7 @@ from src.domain.models.CampaignDataInputModel import CampaignDataInput
 from src.domain.models.CampaignDataOutputModel import CampaignDataOutput
 import json
 
+
 class CampaignAnalysisService:
     """
     Application Service that orchestrates campaign analysis.
@@ -100,9 +101,11 @@ class CampaignAnalysisService:
             cons = ["Consider adding more engagement hooks"]
             fixes = ["Incorporate emotional triggers"]
         
-        return CampaignDataOutput(
+        output = CampaignDataOutput(
             old_script=campaign_input.video_script,
             pros=pros,
             cons=cons,
             fixes=fixes
         )
+        
+        return output
