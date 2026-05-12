@@ -32,7 +32,12 @@ def AnalyzeAndReiterateCampaign(campaign_input: CampaignDataInput) -> CampaignDa
         critique=analysis_output,
         campaign_data=campaign_input
     )
+<<<<<<< HEAD
     print("✅ Reiteration complete")
     
     return revised_campaign
+=======
+
+    return CampaignDataInput.model_validate(revised_campaign)
+>>>>>>> main
 

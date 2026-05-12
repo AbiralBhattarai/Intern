@@ -38,7 +38,7 @@ class RuleBasedCampaignAnalyzer(CampaignAnalyzerPort):
         words = len(script.split())
         if words == 0:
             return 0
-        return words/duration
+        return words / (duration+1) #+1 to handle division by zero
 
 
     def analyze(self,campaign_data: dict) -> dict:
