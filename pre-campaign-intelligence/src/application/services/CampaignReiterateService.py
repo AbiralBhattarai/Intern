@@ -5,8 +5,8 @@ import json
 
 class CampaignReiterateService:
     """Application Service that orchestrates campaign reiteration."""
-    def __init__(self,ai_service: AiServicePort):
-        """Initialize with injected AI service dependency."""
+    def __init__(self, ai_service: AiServicePort):
+        """Initialize with injected dependencies."""
         self.ai_service = ai_service
         
         
@@ -35,5 +35,7 @@ class CampaignReiterateService:
         )
         json_str = result[result.find("{"): result.rfind("}") + 1]
         data = json.loads(json_str)
-
-        return CampaignDataInput.model_validate(data)
+        
+        revised_campaign = CampaignDataInput.model_validate(data)
+        
+        return revised_campaign
